@@ -6,8 +6,16 @@ require('dotenv').config();
 
 const app = express();
 
+// ===== CORS CONFIGURATION =====
+// Allow requests from your GitHub Pages frontend
+const corsOptions = {
+  origin: 'https://chandima810.github.io', // frontend URL
+  methods: ['GET', 'POST', 'DELETE'],
+  allowedHeaders: ['Content-Type'],
+};
+app.use(cors(corsOptions));
+
 // ===== MIDDLEWARE =====
-app.use(cors());
 app.use(express.json()); // parse JSON bodies
 
 // ===== PORT =====
@@ -30,7 +38,7 @@ app.post('/api/users', async (req, res) => {
     res.json(newUser.rows[0]);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server error");
+    res.status(500).send('Server error');
   }
 });
 
@@ -40,7 +48,7 @@ app.get('/api/users', async (req, res) => {
     res.json(users.rows);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server error");
+    res.status(500).send('Server error');
   }
 });
 
@@ -51,7 +59,7 @@ app.delete('/api/users/:id', async (req, res) => {
     res.json({ message: 'User deleted successfully' });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server error");
+    res.status(500).send('Server error');
   }
 });
 
@@ -68,7 +76,7 @@ app.post('/api/creativity-paths', async (req, res) => {
     res.json(newPath.rows[0]);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server error");
+    res.status(500).send('Server error');
   }
 });
 
@@ -78,7 +86,7 @@ app.get('/api/creativity-paths', async (req, res) => {
     res.json(paths.rows);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server error");
+    res.status(500).send('Server error');
   }
 });
 
@@ -89,7 +97,7 @@ app.delete('/api/creativity-paths/:id', async (req, res) => {
     res.json({ message: 'Creativity path deleted successfully' });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server error");
+    res.status(500).send('Server error');
   }
 });
 
