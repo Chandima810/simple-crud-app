@@ -3,11 +3,10 @@ const { Pool } = require('pg');
 require('dotenv').config(); // Load environment variables from .env or Render environment
 
 const pool = new Pool({
-  user: process.env.DB_USER,        // Postgres username
-  host: process.env.DB_HOST,        // DB host, e.g., localhost or Render host
-  database: process.env.DB_DATABASE,// Database name
-  password: process.env.DB_PASSWORD,// Postgres password
-  port: process.env.DB_PORT,        // Default 5432
+  connectionString: process.env.DATABASE_URL, // Use the Render DATABASE_URL
+  ssl: {
+    rejectUnauthorized: false, // Required for Render external Postgres
+  },
 });
 
 module.exports = pool;
