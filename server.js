@@ -1,14 +1,14 @@
+// server.js
 const express = require('express');
 const cors = require('cors');
 const pool = require('./db'); // PostgreSQL connection
 require('dotenv').config();
-const path = require('path');
 
 const app = express();
 
 // ===== MIDDLEWARE =====
 app.use(cors());
-app.use(express.json());
+app.use(express.json()); // parse JSON bodies
 
 // ===== PORT =====
 const PORT = process.env.PORT || 5000;
@@ -92,16 +92,6 @@ app.delete('/api/creativity-paths/:id', async (req, res) => {
     res.status(500).send("Server error");
   }
 });
-
-// ===== SERVE FRONTEND IF PRODUCTION =====
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "creativity-frontend/build")));
-
-  // Safe catch-all route for frontend
-  app.get("/*", (req, res) => {
-    res.sendFile(path.join(__dirname, "creativity-frontend/build", "index.html"));
-  });
-}
 
 // ===== START SERVER =====
 app.listen(PORT, () => {
